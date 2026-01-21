@@ -1,44 +1,43 @@
 
 <odoo noupdate="1">
-    <!-- Usa calendario estándar de recursos -->
+    <!-- Centro Gran Formato -->
     <record id="wc_large_format" model="mrp.workcenter">
         <field name="name">Gran Formato</field>
         <field name="code">GF</field>
         <field name="print_center_type">large_format</field>
-        <field name="capacity">1</field>
         <field name="time_efficiency">100.0</field>
         <field name="oee_target">85.0</field>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="active">True</field>
     </record>
 
+    <!-- Centro Rígidos -->
     <record id="wc_rigid" model="mrp.workcenter">
         <field name="name">Rígidos</field>
         <field name="code">RG</field>
         <field name="print_center_type">rigid</field>
-        <field name="capacity">1</field>
         <field name="time_efficiency">100.0</field>
         <field name="oee_target">85.0</field>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="active">True</field>
     </record>
 
+    <!-- Centro Corte -->
     <record id="wc_cutting" model="mrp.workcenter">
         <field name="name">Corte</field>
         <field name="code">CT</field>
         <field name="print_center_type">cutting</field>
-        <field name="capacity">1</field>
         <field name="time_efficiency">100.0</field>
         <field name="oee_target">85.0</field>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="active">True</field>
     </record>
 
+    <!-- Centro Empaque y acabados -->
     <record id="wc_packing_finishing" model="mrp.workcenter">
         <field name="name">Empaque y acabados</field>
         <field name="code">EA</field>
         <field name="print_center_type">packing_finishing</field>
-        <field name="capacity">1</field>
         <field name="time_efficiency">100.0</field>
         <field name="oee_target">85.0</field>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
