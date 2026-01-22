@@ -22,9 +22,11 @@
         'views/composer_views.xml',
         'views/sale_integration_views.xml',
         'views/sale_order_statbutton_views.xml',  # <-- NUEVO
+        'views/print_job_open_sale_button.xml',   # <-- añade esta línea
     ],
     'installable': True,
     'application': False,
 }
+
 
 
