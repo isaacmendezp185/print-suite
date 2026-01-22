@@ -1,0 +1,90 @@
+
+<odoo>
+    <!-- Menú de HERRAMIENTAS bajo el menú raíz -->
+    <menuitem id="menu_print_tools_root"
+              name="Herramientas"
+              parent="print_workcenters.menu_print_root"
+              sequence="30"/>
+
+    <!-- Acción para abrir el wizard en modal -->
+    <record id="action_print_composer_wizard" model="ir.actions.act_window">
+        <field name="name">Asistente de composición</field>
+        <field name="res_model">print.composer.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Menú para lanzar el wizard -->
+    action_print_composer_wizard
+
+    <!-- Vista del wizard -->
+    <record id="view_print_composer_form" model="ir.ui.view">
+        <field name="name">print.composer.wizard.form</field>
+        <field name="model">print.composer.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Asistente de composición">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create_edit': True}"/>
+                            <field name="deadline_date"/>
+                            <field name="priority"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- Selección de tipo de centro -->
+                            <field name="center_type"/>
+                            <!-- Máquina filtrada por tipo de centro -->
+                            <field name="machine_id" options="{'no_create': False}"/>
+                            <field name="workcenter_id" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Materiales">
+                        <group>
+                            <field name="substrate_id"/>
+                            <field name="ink_id"/>
+                        </group>
+                        <group>
+                            <field name="print_technology"/>
+                            <field name="quality"/>
+                            <field name="estimate_costs"/>
+                        </group>
+                    </group>
+
+                    <group string="Medidas y cantidad">
+                        <group>
+                            <field name="width_mm"/>
+                            <field name="height_mm"/>
+                            <field name="quantity"/>
+                        </group>
+                        <group>
+                            <field name="area_m2" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Orden de Fabricación (opcional)">
+                        <group>
+                            <field name="create_mo"/>
+                            <field name="product_id" invisible="not create_mo"/>
+                            <field name="product_uom_id" invisible="not create_mo"/>
+                            <field name="product_qty" invisible="not create_mo"/>
+                        </group>
+                    </group>
+
+                    <group string="Notas">
+                        <label for="note" string="Notas"/>
+                        <field name="note"/>
+                    </group>
+                </sheet>
+
+                <footer>
+                    <button name="action_confirm" string="Crear trabajo" type="object" class="btn-primary"/>
+                    <button string="Cerrar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
+
