@@ -126,11 +126,25 @@ class PrintJob(models.Model):
         }
         bom = self.env['mrp.bom'].create(bom_vals)
 
+        
+# Elegir el modelo correcto de operaciones de BoM según la versión/build
+    op_model_name = 'mrp.bom.operation' if ('mrp.bom.operation' in self.env) else 'mrp.routing.workcenter'
+    op_model = self.env[op_model_name]
+
+        
         # Crear operaciones asociadas a la BoM
         ops = self._build_job_operations()
         op_model = self.env['mrp.bom.operation']
         for op in ops:
-            op_model.create(dict(op, bom_id=bom.id))
+           
+    # Campos mínimos comunes a ambos modelos: name, workcenter_id, sequence, bom_id
+        op_model.create({
+            'name': op['name'],
+            'workcenter_id': op['workcenter_id'],
+            'sequence': op.get('sequence', 1),
+            'bom_id': bom.id,
+        })
+
 
         self.write({'bom_id': bom.id})
         return bom
@@ -227,5 +241,6 @@ class PrintJob(models.Model):
             'view_mode': 'form',
             'target': 'current',
         }
+
 
 
