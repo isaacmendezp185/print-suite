@@ -5,12 +5,20 @@
         <field name="model">print.job</field>
         <field name="inherit_id" ref="print_job_manager.view_print_job_form"/>
         <field name="arch" type="xml">
-            <!-- Insertar el smart button ANTES del statusbar de estados -->
+            <!-- Insertamos el botón tipo stat button en el header del formulario de print.job
+                 Nota: usamos condición con expresión directa (Odoo 17/18), no attrs/states. -->
             <xpath expr="//form/header/field[@name='state']" position="before">
                 <button name="action_open_sale_order"
-               </button>
+                        type="object"
+                        class="oe_stat_button"
+                        invisible="not sale_line_id">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Pedido de venta</span>
+                    </div>
+                </button>
             </xpath>
         </field>
     </record>
 </odoo>
+
      
