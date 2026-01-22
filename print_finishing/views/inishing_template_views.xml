@@ -1,0 +1,61 @@
+<odoo>
+    <!-- Menú Configuración -> Acabados -> Plantillas -->
+    <menuitem id="menu_print_finishing_config_root"
+              name="Acabados"
+              parent="print_workcenters.menu_print_config_root"
+              sequence="40"/>
+
+    <menuitem id="menu_print_finishing_templates"
+              name="Plantillas de acabados"
+              parent="menu_print_finishing_config_root"
+              sequence="10"/>
+
+    <!-- Plantilla: list/form -->
+    <record id="view_print_finishing_template_list" model="ir.ui.view">
+        <field name="name">print.finishing.template.list</field>
+        <field name="model">print.finishing.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="note"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_print_finishing_template_form" model="ir.ui.view">
+        <field name="name">print.finishing.template.form</field>
+        <field name="model">print.finishing.template</field>
+        <field name="arch" type="xml">
+            <form string="Plantilla de acabados">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="note"/>
+                    </group>
+
+                    <field name="line_ids">
+                        <list editable="bottom">
+                            <field name="sequence" optional="hide"/>
+                            <field name="operation"/>
+                            <field name="basis"/>
+                            <field name="qty_mode"/>
+                            <field name="qty_value"/>
+                            <field name="machine_id" options="{'no_create': False}"/>
+                            <field name="default_hours"/>
+                            <field name="default_fixed_cost" widget="monetary"/>
+                            <field name="cost_hour_override" widget="monetary"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_finishing_templates" model="ir.actions.act_window">
+        <field name="name">Plantillas de acabados</field>
+        <field name="res_model">print.finishing.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    action_print_finishing_templates
+</odoo>
