@@ -22,12 +22,12 @@
                             <field name="machine_id" options="{'no_create': False}"/>
                             <field name="workcenter_id"/>
                             <field name="basis"/>
-                            <field name="quantity_area_m2" column_invisible="basis != 'area'"/>
-                            <field name="quantity_linear_m" column_invisible="basis != 'linear'"/>
-                            <field name="hours" column_invisible="basis == 'fixed'"/>
+                            <field name="quantity_area_m2" invisible="basis != 'area'"/>
+                            <field name="quantity_linear_m" invisible="basis != 'linear'"/>
+                            <field name="hours" invisible="basis == 'fixed'"/>
                             <field name="cost_hour_override"/>
                             <field name="effective_cost_hour" readonly="1" widget="monetary"/>
-                            <field name="fixed_cost" column_invisible="basis != 'fixed'"/>
+                            <field name="fixed_cost" invisible="basis != 'fixed'"/>
                             <field name="cost_line" readonly="1" widget="monetary"/>
                             <field name="note" optional="hide"/>
                         </list>
@@ -37,4 +37,5 @@
         </field>
     </record>
 </odoo>
+
 
