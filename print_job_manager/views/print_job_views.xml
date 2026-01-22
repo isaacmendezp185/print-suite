@@ -73,10 +73,12 @@
                             <field name="substrate_id"/>
                             <field name="ink_id"/>
                         </group>
-                        <group>
-                            <label string="Notas"/>
-                            <field name="note"/>
-                        </group>
+                        
+<group>
+    <label for="note" string="Notas"/>
+    <field name="note"/>
+</group>
+
                     </group>
 
                     <group string="Medidas y cantidad">
@@ -194,3 +196,4 @@
               action="action_print_job"
               sequence="10"/>
 </odoo>
+
