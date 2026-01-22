@@ -1,4 +1,3 @@
-
 <odoo>
     <!-- Heredamos el formulario de print.job para añadir la pestaña "Acabados" -->
     <record id="view_print_job_form_finishing_inherit" model="ir.ui.view">
@@ -14,7 +13,8 @@
                         <field name="total_finishing_cost" readonly="1" widget="monetary"/>
                     </group>
 
-                    <field name="finishing_line_ids" context="{'default_job_id': active_id}">
+                    <!-- Sin context: el O2M ya fija job_id automáticamente -->
+                    <field name="finishing_line_ids">
                         <list editable="bottom">
                             <field name="sequence" optional="hide"/>
                             <field name="operation"/>
@@ -37,3 +37,4 @@
         </field>
     </record>
 </odoo>
+
