@@ -1,0 +1,11 @@
+
+<odoo>
+    <record id="view_print_job_form_inherit_open_so_btn" model="ir.ui.view">
+        <field name="name">print.job.form.inherit.open.so.btn</field>
+        <field name="model">print.job</field>
+        <field name="inherit_id" ref="print_job_manager.view_print_job_form"/>
+        <field name="arch" type="xml">
+            <!-- Insertar el smart button ANTES del statusbar de estados -->
+            <xpath expr="//form/header/field[@name='state']" position="before">
+                <button name="action_open_sale_order"
+                       
