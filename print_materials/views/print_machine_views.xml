@@ -1,0 +1,76 @@
+
+<odoo>
+    <record id="view_print_machine_list" model="ir.ui.view">
+        <field name="name">print.machine.list</field>
+        <field name="model">print.machine</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="workcenter_id"/>
+                <field name="center_type"/>
+                <field name="machine_role"/>
+                <field name="speed_m2_h"/>
+                <field name="speed_linear_m_h"/>
+                <field name="effective_cost_hour" widget="monetary"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_print_machine_form" model="ir.ui.view">
+        <field name="name">print.machine.form</field>
+        <field name="model">print.machine</field>
+        <field name="arch" type="xml">
+            <form string="Máquina">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="workcenter_id" options="{'no_create': False}"/>
+                            <field name="center_type"/>
+                            <field name="machine_role"/>
+                        </group>
+                    </group>
+
+                    <group string="Rendimiento">
+                        <group>
+                            <field name="speed_m2_h"/>
+                            <field name="speed_linear_m_h"/>
+                        </group>
+                        <group>
+                            <field name="currency_id" readonly="1"/>
+                            <field name="cost_hour_override"/>
+                            <field name="effective_cost_hour" readonly="1" widget="monetary"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Tintas soportadas">
+                            <field name="supported_inks" widget="many2many_tags" options="{'no_create': False}"/>
+                        </page>
+                        <page string="Notas">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_machine" model="ir.actions.act_window">
+        <field name="name">Máquinas</field>
+        <field name="res_model">print.machine</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_print_machine"
+              name="Máquinas"
+              parent="menu_print_materials_root"
+              sequence="30"
+              action="action_print_machine"/>
+</odoo>

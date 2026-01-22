@@ -1,0 +1,86 @@
+
+<odoo>
+    <!-- Menús bajo el menú de Configuración del módulo 1 -->
+    <menuitem id="menu_print_materials_root"
+              name="Materiales"
+              parent="print_workcenters.menu_print_config_root"
+              sequence="20"/>
+
+    <record id="view_print_substrate_list" model="ir.ui.view">
+        <field name="name">print.substrate.list</field>
+        <field name="model">print.substrate</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="substrate_kind"/>
+                <field name="width_usable_mm"/>
+                <field name="length_roll_m"/>
+                <field name="area_roll_m2"/>
+                <field name="waste_rate"/>
+                <field name="cost_roll"/>
+                <field name="cost_m2"/>
+                <field name="active" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_print_substrate_form" model="ir.ui.view">
+        <field name="name">print.substrate.form</field>
+        <field name="model">print.substrate</field>
+        <field name="arch" type="xml">
+            <form string="Sustrato">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="substrate_kind"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="waste_rate"/>
+                            <field name="currency_id" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Rollo (flexible)">
+                            <group>
+                                <field name="width_usable_mm"/>
+                                <field name="length_roll_m"/>
+                                <field name="area_roll_m2" readonly="1"/>
+                                <field name="cost_roll"/>
+                                <field name="cost_m2" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Hoja (rígidos)">
+                            <group>
+                                <field name="sheet_width_mm"/>
+                                <field name="sheet_height_mm"/>
+                                <field name="sheet_area_m2" readonly="1"/>
+                                <field name="cost_sheet"/>
+                                <field name="cost_m2_sheet" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Descripción">
+                            <field name="description" placeholder="Detalles, marcas, recomendaciones..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_substrate" model="ir.actions.act_window">
+        <field name="name">Sustratos</field>
+        <field name="res_model">print.substrate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_print_substrate"
+              name="Sustratos"
+              parent="menu_print_materials_root"
+              sequence="10"
+              action="action_print_substrate"/>
+</odoo>

@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_print_substrate_user,access_print_substrate_user,model_print_substrate,base.group_user,1,1,1,1
+access_print_ink_user,access_print_ink_user,model_print_ink,base.group_user,1,1,1,1
+access_print_machine_user,access_print_machine_user,model_print_machine,base.group_user,1,1,1,1
+
+
+
+
+
+
+
+

@@ -1,0 +1,96 @@
+
+<odoo noupdate="1">
+
+    <!-- Sustratos -->
+    <record id="substrate_lona_13oz" model="print.substrate">
+        <field name="name">Lona Front 13 oz</field>
+        <field name="code">L-13OZ</field>
+        <field name="substrate_kind">flex</field>
+        <field name="width_usable_mm">3200</field>
+        <field name="length_roll_m">50</field>
+        <field name="waste_rate">3</field>
+        <field name="cost_roll">2500.0</field>
+    </record>
+
+    <record id="substrate_vinil_calend" model="print.substrate">
+        <field name="name">Vinil calandrado</field>
+        <field name="code">VC-01</field>
+        <field name="substrate_kind">flex</field>
+        <field name="width_usable_mm">1370</field>
+        <field name="length_roll_m">50</field>
+        <field name="waste_rate">5</field>
+        <field name="cost_roll">1800.0</field>
+    </record>
+
+    <record id="substrate_acrilico_3mm" model="print.substrate">
+        <field name="name">Acrílico 3 mm</field>
+        <field name="code">ACR-3</field>
+        <field name="substrate_kind">rigid</field>
+        <field name="sheet_width_mm">1220</field>
+        <field name="sheet_height_mm">2440</field>
+        <field name="waste_rate">4</field>
+        <field name="cost_sheet">950.0</field>
+    </record>
+
+    <!-- Tintas -->
+    <record id="ink_uv_cmykw" model="print.ink">
+        <field name="name">UV CMYK+W</field>
+        <field name="code">UV-CMYKW</field>
+        <field name="technology">uv</field>
+        <field name="color">CMYK+W</field>
+        <field name="cost_ml">0.85</field>
+        <field name="consumption_ml_m2">8.0</field>
+    </record>
+
+    <record id="ink_latex_cmyk" model="print.ink">
+        <field name="name">Látex CMYK</field>
+        <field name="code">LTX-CMYK</field>
+        <field name="technology">latex</field>
+        <field name="color">CMYK</field>
+        <field name="cost_ml">0.55</field>
+        <field name="consumption_ml_m2">10.0</field>
+    </record>
+
+    <!-- Máquinas (vinculadas a Workcenters) -->
+    <record id="machine_gf_01" model="print.machine">
+        <field name="name">GF-01 Impresora Gran Formato</field>
+        <field name="code">GF-01</field>
+        <field name="workcenter_id" ref="print_workcenters.wc_large_format"/>
+        <field name="center_type">large_format</field>
+        <field name="machine_role">printer</field>
+        <field name="speed_m2_h">35</field>
+        <field name="cost_hour_override">0</field>
+        <field name="supported_inks" eval="[(6, 0, [ref('ink_latex_cmyk')])]"/>
+    </record>
+
+    <record id="machine_rigid_01" model="print.machine">
+        <field name="name">RG-01 Plana para rígidos</field>
+        <field name="code">RG-01</field>
+        <field name="workcenter_id" ref="print_workcenters.wc_rigid"/>
+        <field name="center_type">rigid</field>
+        <field name="machine_role">printer</field>
+        <field name="speed_m2_h">20</field>
+        <field name="cost_hour_override">0</field>
+        <field name="supported_inks" eval="[(6, 0, [ref('ink_uv_cmykw')])]"/>
+    </record>
+
+    <record id="machine_cut_01" model="print.machine">
+        <field name="name">CT-01 Mesa de corte</field>
+        <field name="code">CT-01</field>
+        <field name="workcenter_id" ref="print_workcenters.wc_cutting"/>
+        <field name="center_type">cutting</field>
+        <field name="machine_role">cutter</field>
+        <field name="speed_linear_m_h">120</field>
+        <field name="cost_hour_override">0</field>
+    </record>
+
+    <record id="machine_lam_01" model="print.machine">
+        <field name="name">EA-01 Laminadora</field>
+        <field name="code">EA-01</field>
+        <field name="workcenter_id" ref="print_workcenters.wc_packing_finishing"/>
+        <field name="center_type">packing_finishing</field>
+        <field name="machine_role">laminator</field>
+        <field name="speed_m2_h">30</field>
+        <field name="cost_hour_override">0</field>
+    </record>
+</odoo>

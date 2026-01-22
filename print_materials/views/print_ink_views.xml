@@ -1,0 +1,57 @@
+
+<odoo>
+    <record id="view_print_ink_list" model="ir.ui.view">
+        <field name="name">print.ink.list</field>
+        <field name="model">print.ink</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="technology"/>
+                <field name="color"/>
+                <field name="cost_ml"/>
+                <field name="consumption_ml_m2"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_print_ink_form" model="ir.ui.view">
+        <field name="name">print.ink.form</field>
+        <field name="model">print.ink</field>
+        <field name="arch" type="xml">
+            <form string="Tinta">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="technology"/>
+                            <field name="color"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" readonly="1"/>
+                            <field name="cost_ml"/>
+                            <field name="consumption_ml_m2"/>
+                        </group>
+                    </group>
+                    <group string="Notas">
+                        <field name="note" placeholder="Observaciones, compatibilidad, etc."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_ink" model="ir.actions.act_window">
+        <field name="name">Tintas</field>
+        <field name="res_model">print.ink</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_print_ink"
+              name="Tintas"
+              parent="menu_print_materials_root"
+              sequence="20"
+              action="action_print_ink"/>
+</odoo>
