@@ -13,7 +13,15 @@
                         <field name="total_finishing_cost" readonly="1" widget="monetary"/>
                     </group>
 
-                    <!-- Sin context: el O2M ya fija job_id automáticamente -->
+                    <!-- Botón para abrir el wizard de plantillas -->
+                    <group>
+                        <button name="%(print_finishing.action_print_finishing_apply_template)d"
+                                type="action"
+                                string="Agregar desde plantilla"
+                                class="btn-secondary"/>
+                    </group>
+
+                    <!-- Líneas -->
                     <field name="finishing_line_ids">
                         <list editable="bottom">
                             <field name="sequence" optional="hide"/>
@@ -37,5 +45,3 @@
         </field>
     </record>
 </odoo>
-
-
