@@ -1,0 +1,27 @@
+<odoo>
+    <!-- Botones MO/WO en el header de print.job -->
+    <record id="view_print_job_form_mo_buttons_inherit" model="ir.ui.view">
+        <field name="name">print.job.form.mo.buttons.inherit</field>
+        <field name="model">print.job</field>
+        <!-- Heredamos la vista principal del job -->
+        <field name="inherit_id" ref="print_job_manager.view_print_job_form"/>
+        <field name="arch" type="xml">
+            <!-- Insertamos antes del statusbar de estado -->
+            <xpath expr="//form/header/field[@name='state']" position="before">
+                <!-- Crea la MO con WOs (solo si no existe aún) -->
+                <button name="action_create_mo_with_wos"
+                        string="Crear MO + WOs"
+                        type="object"
+                        class="btn-primary"
+                        invisible="production_id"/>
+
+                <!-- Abre la MO ya creada -->
+                <button name="action_open_mo"
+                        string="Ver Orden de Fabricación"
+                        type="object"
+                        class="oe_stat_button"
+                        invisible="not production_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
