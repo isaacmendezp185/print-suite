@@ -13,7 +13,7 @@
               sequence="10"
               groups="base.group_user"/>
 
-    <!-- Vista lista: SOLO campos que existen en tu modelo -->
+    <!-- Vista lista (campos seguros en 18) -->
     <record id="view_print_mrp_workcenter_list" model="ir.ui.view">
         <field name="name">print.mrp.workcenter.list</field>
         <field name="model">mrp.workcenter</field>
@@ -22,8 +22,6 @@
                 <field name="name"/>
                 <field name="code"/>
                 <field name="print_center_type"/>
-                <!-- Capacidad de producción (tu build usa capacity_uom) -->
-                <field name="capacity_uom"/>
                 <field name="time_efficiency"/>
                 <field name="oee_target"/>
                 <field name="active"/>
@@ -31,7 +29,7 @@
         </field>
     </record>
 
-    <!-- Vista formulario -->
+    <!-- Vista formulario (campos seguros) -->
     <record id="view_print_mrp_workcenter_form" model="ir.ui.view">
         <field name="name">print.mrp.workcenter.form</field>
         <field name="model">mrp.workcenter</field>
@@ -46,26 +44,11 @@
                             <field name="active"/>
                         </group>
                         <group>
-                            <field name="resource_calendar_id"/>
                             <field name="time_efficiency"/>
                             <field name="oee_target"/>
-                            <!-- Costo por hora (en tu build es costs_hour) -->
-                            <field name="costs_hour"/>
+                            <field name="resource_calendar_id"/>
                         </group>
                     </group>
-
-                    <group string="Parámetros de operación">
-                        <group>
-                            <!-- Tiempos antes/después de producir (presentes en tu modelo) -->
-                            <field name="time_start"/>
-                            <field name="time_stop"/>
-                        </group>
-                        <group>
-                            <!-- Capacidad (campo que tienes disponible) -->
-                            <field name="capacity_uom"/>
-                        </group>
-                    </group>
-
                     <notebook>
                         <page string="Descripción">
                             <field name="note"/>
@@ -84,7 +67,11 @@
         <field name="domain">[('print_center_type', '!=', False)]</field>
     </record>
 
-    <!-- Enlaza menú -> acción -->
-    action_print_workcenters
+    <!-- Menú que apunta a la acción -->
+    <menuitem id="menu_print_workcenters"
+              name="Centros de trabajo"
+              parent="menu_print_config_root"
+              action="action_print_workcenters"
+              sequence="20"
+              groups="base.group_user"/>
 </odoo>
-``
