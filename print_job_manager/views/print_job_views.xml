@@ -1,0 +1,197 @@
+
+<odoo>
+    <!-- Menú Operación bajo el menú raíz de la suite -->
+    <menuitem id="menu_print_operations_root"
+              name="Operación"
+              parent="print_workcenters.menu_print_root"
+              sequence="20"/>
+
+    <!-- LIST -->
+    <record id="view_print_job_list" model="ir.ui.view">
+        <field name="name">print.job.list</field>
+        <field name="model">print.job</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="state"/>
+                <field name="machine_id"/>
+                <field name="workcenter_id"/>
+                <field name="substrate_id"/>
+                <field name="ink_id"/>
+                <field name="quantity"/>
+                <field name="area_m2"/>
+                <field name="deadline_date"/>
+                <field name="priority"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM -->
+    <record id="view_print_job_form" model="ir.ui.view">
+        <field name="name">print.job.form</field>
+        <field name="model">print.job</field>
+        <field name="arch" type="xml">
+            <form string="Trabajo de impresión">
+                <header>
+                    <button name="action_set_quoted" string="Marcar como cotizado" type="object"
+                            states="draft" class="oe_highlight"/>
+                    <button name="action_approve" string="Aprobar" type="object" states="draft,quoted" class="btn-primary"/>
+                    <button name="action_start_production" string="Iniciar producción" type="object" states="approved,quoted" class="btn-primary"/>
+                    <button name="action_done" string="Terminar" type="object" states="in_production" class="btn-success"/>
+                    <button name="action_cancel" string="Cancelar" type="object" states="draft,quoted,approved,in_production" class="btn-secondary"/>
+                    <button name="action_reset_to_draft" string="Reabrir" type="object" states="cancel,done"/>
+
+                    <button name="action_create_mo" string="Crear Orden de Fabricación" type="object"
+                            class="btn-secondary" attrs="{'invisible': ['|', ('product_id','=',False), ('state','not in', ['approved','quoted'])]}"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,quoted,approved,in_production,done,cancel"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create_edit': True}"/>
+                            <field name="deadline_date"/>
+                            <field name="priority"/>
+                        </group>
+                        <group>
+                            <field name="machine_id" options="{'no_create': False}"/>
+                            <field name="workcenter_id"/>
+                            <field name="print_technology"/>
+                            <field name="quality"/>
+                        </group>
+                    </group>
+
+                    <group string="Materiales">
+                        <group>
+                            <field name="substrate_id"/>
+                            <field name="ink_id"/>
+                        </group>
+                        <group>
+                            <label string="Notas"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+
+                    <group string="Medidas y cantidad">
+                        <group>
+                            <field name="width_mm"/>
+                            <field name="height_mm"/>
+                            <field name="quantity"/>
+                        </group>
+                        <group>
+                            <field name="area_m2" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Producto/MRP (opcional)">
+                        <group>
+                            <field name="product_id" options="{'no_create': False}"/>
+                            <field name="product_uom_id"/>
+                            <field name="product_qty"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Costos (estimados)">
+                            <group>
+                                <field name="cost_material" widget="monetary"/>
+                                <field name="cost_ink" widget="monetary"/>
+                                <field name="cost_machine" widget="monetary"/>
+                                <field name="cost_finishing" widget="monetary"/>
+                                <field name="cost_total" widget="monetary"/>
+                                <field name="currency_id" readonly="1"/>
+                            </group>
+                        </page>
+
+                        <page string="Chatter">
+                            <div class="oe_chatter">
+                                <field name="message_follower_ids" widget="mail_followers"/>
+                                <field name="activity_ids" widget="mail_activity"/>
+                                <field name="message_ids" widget="mail_thread"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- KANBAN -->
+    <record id="view_print_job_kanban" model="ir.ui.view">
+        <field name="name">print.job.kanban</field>
+        <field name="model">print.job</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="state"/>
+                <field name="machine_id"/>
+                <field name="workcenter_id"/>
+                <field name="substrate_id"/>
+                <field name="quantity"/>
+                <field name="area_m2"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div><span>Cliente: </span><field name="partner_id"/></div>
+                            <div><span>Máquina: </span><field name="machine_id"/></div>
+                            <div><span>Centro: </span><field name="workcenter_id"/></div>
+                            <div><span>Cantidad: </span><field name="quantity"/></div>
+                            <div><span>Área total: </span><field name="area_m2"/> m²</div>
+                            <div><span>Estado: </span><field name="state"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- SEARCH -->
+    <record id="view_print_job_search" model="ir.ui.view">
+        <field name="name">print.job.search</field>
+        <field name="model">print.job</field>
+        <field name="arch" type="xml">
+            <search string="Buscar trabajos">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="machine_id"/>
+                <field name="workcenter_id"/>
+                <field name="substrate_id"/>
+                <field name="state"/>
+                <filter string="Borrador" name="state_draft" domain="[('state','=','draft')]"/>
+                <filter string="Cotizado" name="state_quoted" domain="[('state','=','quoted')]"/>
+                <filter string="Aprobado" name="state_approved" domain="[('state','=','approved')]"/>
+                <filter string="Producción" name="state_in_prod" domain="[('state','=','in_production')]"/>
+                <filter string="Terminado" name="state_done" domain="[('state','=','done')]"/>
+                <filter string="Cancelado" name="state_cancel" domain="[('state','=','cancel')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_print_job" model="ir.actions.act_window">
+        <field name="name">Trabajos</field>
+        <field name="res_model">print.job</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_print_job_search"/>
+        <field name="help" type="html">
+            <p>Crea y gestiona trabajos de impresión. Desde aquí puedes avanzar estados y, opcionalmente, crear una Orden de Fabricación.</p>
+        </field>
+    </record>
+
+    <!-- MENÚ -->
+    <menuitem id="menu_print_jobs"
+              name="Trabajos"
+              parent="menu_print_operations_root"
+              action="action_print_job"
+              sequence="10"/>
+</odoo>
