@@ -19,12 +19,13 @@
     'views/finishing_template_views.xml',         # 1) Configuración (ok)
     'views/finishing_apply_template_wizard.xml',  # 2) CREA la acción
     'views/finishing_views.xml',                  # 3) Usa la acción (ya existe)
-    'print_job_mo_buttons_views.xml',
+    'views/print_job_mo_buttons_views.xml',
 ],
 
     'installable': True,
     'application': False,
 }
+
 
 
 
