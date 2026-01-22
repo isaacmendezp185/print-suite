@@ -126,6 +126,7 @@ class PrintJob(models.Model):
         self.write({'state': 'draft'})
 
     # Creación opcional de Orden de Fabricación (MRP)
+   
     def action_create_mo(self):
         for rec in self:
             if not rec.product_id or rec.product_qty <= 0:
@@ -136,10 +137,11 @@ class PrintJob(models.Model):
                 'product_uom_id': rec.product_uom_id.id or rec.product_id.uom_id.id,
                 'origin': rec.name,
                 'company_id': rec.company_id.id,
-                'date_deadline': rec.deadline_date,
-                # Nota: las operaciones por centro de trabajo vendrán de la BoM si existe.
             }
+            if rec.deadline_date:
+                mo_vals['date_deadline'] = rec.deadline_date
             mo = self.env['mrp.production'].create(mo_vals)
-            # Enlazar chatter
-            rec.message_post(body=_('Se creó la Orden de Fabricación <a href="#" data-oe-model="mrp.production" data-oe-id="%s">%s</a>.') % (mo.id, mo.name))
+            rec.message_post(body=_('Se creó la Orden de Fabricación %s.') % mo.name)
         return True
+
+
