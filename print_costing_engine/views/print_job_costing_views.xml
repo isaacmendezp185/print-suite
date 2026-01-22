@@ -1,0 +1,18 @@
+
+<odoo>
+    <record id="view_print_job_form_costing_inherit" model="ir.ui.view">
+        <field name="name">print.job.form.costing.inherit</field>
+        <field name="model">print.job</field>
+        <field name="inherit_id" ref="print_job_manager.view_print_job_form"/>
+        <field name="arch" type="xml">
+            <!-- Insertar botón antes del statusbar -->
+            <xpath expr="//form/header/field[@name='state']" position="before">
+                <button name="action_estimate_costs"
+                        string="Estimar costos"
+                        type="object"
+                        class="btn-secondary"
+                        invisible="state in ['cancel','done']"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
