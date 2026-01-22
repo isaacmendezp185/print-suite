@@ -1,8 +1,7 @@
-
 {
     'name': 'Print Finishing',
     'summary': 'Acabados (laminado, corte, costura, ojillos, empaque) para trabajos de impresión',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'author': 'Isaac Mendez • Suite de Impresión',
     'license': 'LGPL-3',
     'category': 'Manufacturing/Manufacturing',
@@ -12,14 +11,18 @@
         'print_workcenters',
         'print_materials',
         'print_job_manager',
-        'print_costing_engine',   # para extender action_estimate_costs
+        'print_costing_engine',
     ],
     'data': [
         'security/ir.model.access.csv',
         'views/finishing_views.xml',
+        'views/finishing_template_views.xml',         # <-- NUEVO (configuración)
+        'views/finishing_apply_template_wizard.xml',  # <-- NUEVO (wizard)
     ],
     'installable': True,
     'application': False,
 }
+
+
 
 
