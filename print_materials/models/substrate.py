@@ -6,28 +6,32 @@ class PrintSubstrate(models.Model):
     _description = 'Sustrato (material de impresión)'
     _order = 'name'
 
+    # --- Identificación ---
     name = fields.Char('Nombre', required=True)
     code = fields.Char('Código', index=True)
     company_id = fields.Many2one('res.company', string='Compañía', default=lambda self: self.env.company, index=True)
     currency_id = fields.Many2one('res.currency', string='Moneda', related='company_id.currency_id', store=True, readonly=True)
 
-    # Parámetros de rollo (para materiales flexibles)
+    # --- Estado ---
+    active = fields.Boolean('Activo', default=True)
+
+    # --- Parámetros de rollo (flexibles) ---
     width_usable_mm = fields.Float('Ancho útil (mm)', help='Ancho utilizable del rollo en milímetros')
     length_roll_m = fields.Float('Largo del rollo (m)')
     area_roll_m2 = fields.Float('Área por rollo (m²)', compute='_compute_area_roll_m2', store=True)
     waste_rate = fields.Float('Merma (%)', help='Porcentaje de merma estimada (0-100)')
 
-    # Costos
+    # --- Costos ---
     cost_roll = fields.Monetary('Costo por rollo', currency_field='currency_id')
     cost_m2 = fields.Monetary('Costo por m² (estimado)', currency_field='currency_id', compute='_compute_cost_m2', store=True)
 
-    # Clasificación
+    # --- Clasificación ---
     substrate_kind = fields.Selection([
         ('flex', 'Flexible (lona, vinil, mesh, tela)'),
         ('rigid', 'Rígido (acrílico, PVC, foamboard)'),
     ], string='Tipo de sustrato', default='flex', required=True)
 
-    # Para rígidos por hoja (opcional)
+    # --- Rígidos por hoja (opcional) ---
     sheet_width_mm = fields.Float('Ancho hoja (mm)')
     sheet_height_mm = fields.Float('Alto hoja (mm)')
     sheet_area_m2 = fields.Float('Área por hoja (m²)', compute='_compute_sheet_area', store=True)
@@ -71,3 +75,4 @@ class PrintSubstrate(models.Model):
                 rec.cost_m2_sheet = (rec.cost_sheet or 0.0) / rec.sheet_area_m2 * factor_merma
             else:
                 rec.cost_m2_sheet = 0.0
+
