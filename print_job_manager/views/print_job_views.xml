@@ -34,19 +34,33 @@
         <field name="arch" type="xml">
             <form string="Trabajo de impresión">
                 <header>
+                    <!-- Sin 'states': usar expresiones en 'invisible' -->
                     <button name="action_set_quoted" string="Marcar como cotizado" type="object"
-                            states="draft" class="oe_highlight"/>
-                    <button name="action_approve" string="Aprobar" type="object" states="draft,quoted" class="btn-primary"/>
-                    <button name="action_start_production" string="Iniciar producción" type="object" states="approved,quoted" class="btn-primary"/>
-                    <button name="action_done" string="Terminar" type="object" states="in_production" class="btn-success"/>
-                    <button name="action_cancel" string="Cancelar" type="object" states="draft,quoted,approved,in_production" class="btn-secondary"/>
-                    <button name="action_reset_to_draft" string="Reabrir" type="object" states="cancel,done"/>
+                            class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Aprobar" type="object"
+                            class="btn-primary"
+                            invisible="state not in ['draft','quoted']"/>
+                    <button name="action_start_production" string="Iniciar producción" type="object"
+                            class="btn-primary"
+                            invisible="state not in ['approved','quoted']"/>
+                    <button name="action_done" string="Terminar" type="object"
+                            class="btn-success"
+                            invisible="state != 'in_production'"/>
+                    <button name="action_cancel" string="Cancelar" type="object"
+                            class="btn-secondary"
+                            invisible="state not in ['draft','quoted','approved','in_production']"/>
+                    <button name="action_reset_to_draft" string="Reabrir" type="object"
+                            invisible="state not in ['cancel','done']"/>
 
+                    <!-- Antes: attrs; Ahora: expresión directa -->
                     <button name="action_create_mo" string="Crear Orden de Fabricación" type="object"
                             class="btn-secondary"
-                            attrs="{'invisible': ['|', ('product_id','=',False), ('state','not in', ['approved','quoted'])]}"/>
+                            invisible="(not product_id) or (state not in ['approved','quoted'])"/>
 
-                    <field name="state" widget="statusbar" statusbar_visible="draft,quoted,approved,in_production,done,cancel"/>
+                    <!-- El statusbar sigue válido -->
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,quoted,approved,in_production,done,cancel"/>
                 </header>
 
                 <sheet>
@@ -73,12 +87,11 @@
                             <field name="substrate_id"/>
                             <field name="ink_id"/>
                         </group>
-                        
-<group>
-    <label for="note" string="Notas"/>
-    <field name="note"/>
-</group>
-
+                        <group>
+                            <!-- Etiqueta enlazada con 'for' (regla de 17/18) -->
+                            <label for="note" string="Notas"/>
+                            <field name="note"/>
+                        </group>
                     </group>
 
                     <group string="Medidas y cantidad">
@@ -189,11 +202,10 @@
         </field>
     </record>
 
-    <!-- MENÚ que enlaza la acción -->
+    <!-- Menú que enlaza a la acción (forma estándar) -->
     <menuitem id="menu_print_jobs"
               name="Trabajos"
               parent="menu_print_operations_root"
               action="action_print_job"
               sequence="10"/>
 </odoo>
-
