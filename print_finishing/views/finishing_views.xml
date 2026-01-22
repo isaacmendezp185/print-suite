@@ -1,0 +1,39 @@
+
+<odoo>
+    <!-- Heredamos el formulario de print.job para añadir la pestaña "Acabados" -->
+    <record id="view_print_job_form_finishing_inherit" model="ir.ui.view">
+        <field name="name">print.job.form.finishing.inherit</field>
+        <field name="model">print.job</field>
+        <field name="inherit_id" ref="print_job_manager.view_print_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook" position="inside">
+                <page string="Acabados">
+                    <group>
+                        <field name="total_finishing_hours" readonly="1"/>
+                        <field name="cost_finishing" readonly="1" widget="monetary"/>
+                        <field name="total_finishing_cost" readonly="1" widget="monetary"/>
+                    </group>
+
+                    <field name="finishing_line_ids" context="{'default_job_id': active_id}">
+                        <list editable="bottom">
+                            <field name="sequence" optional="hide"/>
+                            <field name="operation"/>
+                            <field name="center_type" readonly="1"/>
+                            <field name="machine_id" options="{'no_create': False}"/>
+                            <field name="workcenter_id"/>
+                            <field name="basis"/>
+                            <field name="quantity_area_m2" column_invisible="basis != 'area'"/>
+                            <field name="quantity_linear_m" column_invisible="basis != 'linear'"/>
+                            <field name="hours" column_invisible="basis == 'fixed'"/>
+                            <field name="cost_hour_override"/>
+                            <field name="effective_cost_hour" readonly="1" widget="monetary"/>
+                            <field name="fixed_cost" column_invisible="basis != 'fixed'"/>
+                            <field name="cost_line" readonly="1" widget="monetary"/>
+                            <field name="note" optional="hide"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
