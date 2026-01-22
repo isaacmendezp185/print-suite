@@ -9,3 +9,4 @@
             <xpath expr="//form/header/field[@name='state']" position="before">
                 <button name="action_open_sale_order"
                        
+</odoo>
