@@ -8,8 +8,7 @@
             <!-- Insertar el smart button ANTES del statusbar de estados -->
             <xpath expr="//form/header/field[@name='state']" position="before">
                 <button name="action_open_sale_order"
-                  
-</button>
+               </button>
             </xpath>
         </field>
     </record>
